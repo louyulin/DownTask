@@ -59,6 +59,20 @@ public class TaskListActivity extends AppCompatActivity implements TaskListAdapt
         dao = new ThreadDaoImpl(this);
         allThreads = dao.getAllThreads();
         progressList = new ArrayList<>();
+        //强行杀死进程重启之后筛选未完成的任务继续下载
+        if (DownloadService.mTasks.size() == 0){
+            List<ThreadInfo> allContinueThreads = dao.getAllContinueThreads();
+            for (ThreadInfo allContinueThread : allContinueThreads) {
+                Intent intent = new Intent(this, DownloadService.class);
+                FileInfo fileInfo = new FileInfo();
+                fileInfo.setFileName(allContinueThread.getTitle());
+                fileInfo.setId(allContinueThread.getId());
+                fileInfo.setUrl(allContinueThread.getUrl());
+                intent.putExtra("fileInfo", fileInfo);
+                intent.setAction(DownloadService.ACTION_START);
+                startService(intent);
+            }
+        }
     }
 
     private void initView() {

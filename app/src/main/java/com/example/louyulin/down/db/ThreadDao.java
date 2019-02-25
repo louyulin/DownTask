@@ -24,6 +24,9 @@ public interface ThreadDao {
 
     List<ThreadInfo> getAllThreads();
 
+    //系统被杀死的时候没有完成的任务
+    List<ThreadInfo> getAllContinueThreads();
+
     //线程信息是否存在
     boolean isExists(String url, int thread_id);
 }

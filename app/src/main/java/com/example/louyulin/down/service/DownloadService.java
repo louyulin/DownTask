@@ -35,7 +35,7 @@ public class DownloadService extends Service {
     public static final int MSG_INIT = 0;
     private DownloadTask downloadTask;
     //下载任务的集合
-    private Map<Integer,DownloadTask> mTasks = new LinkedHashMap<>();
+    public static Map<Integer,DownloadTask> mTasks = new LinkedHashMap<>();
 
 
     Handler handler = new Handler() {
